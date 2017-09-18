@@ -11,7 +11,7 @@ import secret_key
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import (Geometery,
+from model import (SavedGeometry,
                    connect_to_db,
                    db)
 
@@ -41,7 +41,7 @@ def save_geometery():
     latitude = float(request.args.get("lat"))
     longitude = float(request.args.get("long"))
 
-    geometery = Geometery(name=name,
+    geometery = SavedGeometry(name=name,
                           shape=shape,
                           latitude=latitude,
                           longitude=longitude)

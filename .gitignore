@@ -3,3 +3,4 @@
 secret_key.py
 .DS_Store
 psycopg2
+model_joanne.py
