@@ -61,7 +61,7 @@ var mapModule = (function(window,$) {
         featureGroup.clearLayers();
     }
 
-    function saveGeometery(evt) {
+    function saveGeometry(evt) {
         evt.preventDefault();
 
         data = featureGroup.toGeoJSON();
@@ -79,12 +79,12 @@ var mapModule = (function(window,$) {
         }
 
 
-        $.get('/save_geometery.json', 
+        $.get('/save_geometry.json', 
              convertedData, 
              saveConfirm);
     }
 
-    $('#export').on('submit', saveGeometery);
+    $('#export').on('submit', saveGeometry);
 
     function _convertFromFeetToMeters(feet) {
         return feet * METERS_PER_FOOT;

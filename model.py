@@ -23,7 +23,7 @@ class SavedGeometry(db.Model):
     # latitude = db.Column(db.Float, nullable=False)
     # longitude = db.Column(db.Float, nullable=False)
     point_ = db.Column(Geometry(geometry_type='POINT'))
-    string_ = db.Column(Geometry(geometry_type='LINESTRING'))
+    line_ = db.Column(Geometry(geometry_type='LINESTRING'))
     polygon_ = db.Column(Geometry(geometry_type='POLYGON'))
 
     def __repr__(self):
@@ -35,10 +35,10 @@ class SavedGeometry(db.Model):
 
 def sample_data():
     """Test data to configure database"""
-    
+
     first = SavedGeometry(geo_id=1,name="first",shape="point",point_='POINT(37.498 -112.4324)')
-    second = SavedGeometry(geo_id=2,name="first",shape="line",string_='LINESTRING(37.498 -112.4324,37.568 -112.423)')
-    third = SavedGeometry(geo_id=3,name="first",shape="polygon",polygon_='POLYGON((37.498 -112.4324,37.568 -112.423,37.534 -112.469,37.498 -112.4324))')
+    second = SavedGeometry(geo_id=2,name="second",shape="line",line_='LINESTRING(37.498 -112.4324,37.568 -112.423)')
+    third = SavedGeometry(geo_id=3,name="third",shape="polygon",polygon_='POLYGON((37.498 -112.4324,37.568 -112.423,37.534 -112.469,37.498 -112.4324))')
 
     db.session.add_all([first, second, third])
 

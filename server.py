@@ -32,47 +32,37 @@ def index():
 
     return render_template("homepage.html")
 
-@app.route('/save_geometery.json')
-def save_geometery():
-    """Save geometery to database"""
+@app.route('/save_geometry.json')
+def save_geometry():
+    """Save geometry to database"""
 
     name = request.args.get("name")
     shape = request.args.get("shape")
-    latitude = float(request.args.get("lat"))
-    longitude = float(request.args.get("long"))
 
-    geometery = SavedGeometry(name=name,
-                          shape=shape,
-                          latitude=latitude,
-                          longitude=longitude)
+    if shape == "point":
+      geometry = SavedGeometry(name=name,
+                               shape=shape,
+                               point_='POINT(37.498 -112.4324)')
+    elif shape == "line":
+      geometry = SavedGeometry(name=name,
+                               shape=shape,
+                               line_='LINESTRING(37.498 -112.4324,37.568 -112.423)')
+    elif shape == "polygon":
+      geometry = SavedGeometry(name=name,
+                               shape=shape,
+                               polygon_='POLYGON((37.498 -112.4324,37.568 -112.423,37.534 -112.469,37.498 -112.4324))')
+    else:
+      print "put in error handler"
 
-    db.session.add(geometery)
+    db.session.add(geometry)
 
     db.session.commit()
 
     print "******************", name, "**************"
     print "******************", shape, "**************"
-    print "******************", str(latitude), "**************"
-    print "******************", str(longitude), "**************"
+
     return redirect("/")
 
-def create_geojson(sampling_points):
-    """Create a geojson object for input list from in the choosen county"""
-
-    lat_long_features = []
-
-    if shape == 'Point':
-        point = Point([location['long'], location['lat']])
-        feature = Feature(geometry=point, properties={})
-    if shape == 'Polygon':
-        pass
-
-    lat_long_features.append(feature)
-
-    # Geojson FeatureCollection object
-    saved_geometery = FeatureCollection(lat_long_features)
-
-    return saved_geometery
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
