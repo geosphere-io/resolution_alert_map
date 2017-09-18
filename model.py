@@ -15,20 +15,34 @@ db = SQLAlchemy()
 class SavedGeometry(db.Model):
     """SFMTA Board Resolutions"""
 
-    __tablename__ = "geometryData"
+    __tablename__ = "geodata"
 
     geo_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     shape = db.Column(db.String(500), nullable=False)
-    latitude = db.Column(db.Float, nullable=False)
-    longitude = db.Column(db.Float, nullable=False)
-    latlng = db.Column(Geometry(geometry_type='POINT'), nullable=False)
+    # latitude = db.Column(db.Float, nullable=False)
+    # longitude = db.Column(db.Float, nullable=False)
+    point_ = db.Column(Geometry(geometry_type='POINT'))
+    string_ = db.Column(Geometry(geometry_type='LINESTRING'))
+    polygon_ = db.Column(Geometry(geometry_type='POLYGON'))
 
     def __repr__(self):
 
-        return "<Geo ID=%s>" % (self.geo_id)
+        return "<Geo ID=%s Shape=%s>" % (self.geo_id, self.shape)
 
+##############################################################################
+# Sample data
 
+def sample_data():
+    """Test data to configure database"""
+    
+    first = SavedGeometry(geo_id=1,name="first",shape="point",point_='POINT(37.498 -112.4324)')
+    second = SavedGeometry(geo_id=2,name="first",shape="line",string_='LINESTRING(37.498 -112.4324,37.568 -112.423)')
+    third = SavedGeometry(geo_id=3,name="first",shape="polygon",polygon_='POLYGON((37.498 -112.4324,37.568 -112.423,37.534 -112.469,37.498 -112.4324))')
+
+    db.session.add_all([first, second, third])
+
+    db.session.commit()
 ##############################################################################
 # Helper functions
 
@@ -37,7 +51,7 @@ def connect_to_db(app, db_uri=None):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgresql:///geodata'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgresql:///geodata2'
     app.config['SQLALCHEMY_ECHO'] = False
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
