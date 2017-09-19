@@ -27,10 +27,10 @@ var mapModule = (function(window,$) {
 
     var DRAW_CONTROL_SETTINGS = {
         draw: {
-            polyline: false,
+            polyline: { shapeOptions: SHAPE_STYLE_SETTINGS },
             polygon: { shapeOptions: SHAPE_STYLE_SETTINGS },
             rectangle: { shapeOptions: SHAPE_STYLE_SETTINGS },
-            circle: { shapeOptions: SHAPE_STYLE_SETTINGS }
+            circle: false,
         },
         edit: {
             featureGroup: featureGroup,
@@ -65,17 +65,16 @@ var mapModule = (function(window,$) {
         evt.preventDefault();
 
         data = featureGroup.toGeoJSON();
-
+        // console.log(data);
+        
         var name = $('#name').val()
         var shape = data.features[0].geometry.type;
-        var lat = JSON.stringify(data.features[0].geometry.coordinates[0]);
-        var long = JSON.stringify(data.features[0].geometry.coordinates[1]);
+        var coordinates = JSON.stringify(data.features[0].geometry.coordinates);
 
         var convertedData = {
             "name": name,
             "shape": shape,
-            "lat": lat,
-            "long": long
+            "coordinates": coordinates
         }
 
 

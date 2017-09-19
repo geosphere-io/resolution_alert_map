@@ -51,7 +51,7 @@ def connect_to_db(app, db_uri=None):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgresql:///geodata2'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgresql:///geodata'
     app.config['SQLALCHEMY_ECHO'] = False
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
