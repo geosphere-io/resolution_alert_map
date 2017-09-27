@@ -5,6 +5,8 @@ from flask import (Flask,
                   redirect,
                   request, session,
                   jsonify,
+                  flash,
+                  session,
                   g)
 
 import json
@@ -30,9 +32,25 @@ app.secret_key = secret_key.flask_secret_key
 
 @app.route('/')
 def index():
+    """Login page"""
+
+    return render_template("login.html")
+
+
+@app.route('/login')
+def index():
     """Landing page"""
 
-    return render_template("homepage.html")
+    username = request.args.get("username")
+    password = request.args.get("password")
+    session[username] = username
+
+    if username == "admin" and password == "1234":
+        return render_template("homepage.html")
+    else:
+        flash("Invalid username or password")
+        return redirect('/')
+
 
 @app.route('/save_geometry.json')
 def save_geometry():
@@ -47,21 +65,21 @@ def save_geometry():
       point_ = 'POINT({} {})'.format(coordinates[1], coordinates[0])
       line_ = None
       polygon_ = None
-    
+
     elif shape == "LineString":
       coord_string = stringify_coords(coordinates)
 
       line_ = 'LINESTRING({})'.format(coord_string)
       point_=None
       polygon_=None
-    
+
     elif shape == "Polygon":
       coord_string = "("+stringify_coords(coordinates[0])+")"
 
       polygon_ = 'POLYGON({})'.format(coord_string)
       point_=None
       line_=None
-    
+
     else:
       print("put in error handler")
 
@@ -81,13 +99,13 @@ def save_geometry():
     # print "******************", coord_string, "**************"
 
 
-    return redirect("/")
+    return redirect("homepage.html")
 
 #############HELPER FUNCTIONS########################################
 
 def stringify_coords(coordinates):
     coord_string = ""
-    
+
     for pair in coordinates:
         latlng_pair = '{} {}, '.format(pair[1], pair[0])
         coord_string += latlng_pair

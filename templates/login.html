@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div align="center">
+<h1>SFMTA Resolutions</h1>
+<h2>please enter the password</h2>
+
+    <form action="/login" method="POST" id="sign-in form">
+    	<input id="username" name="username" placeholder="Username" required>
+        <br>
+        <input id="password" type="password" name="password" placeholder="Password" required>
+        <br>
+        <input id="submit" type="submit">
+    </form>
+</div>
+
+
+
+{% endblock %}
