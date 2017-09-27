@@ -37,15 +37,17 @@ def index():
     return render_template("login.html")
 
 
-@app.route('/login')
-def index():
+@app.route('/login', methods=['POST'])
+def login():
     """Landing page"""
 
-    username = request.args.get("username")
-    password = request.args.get("password")
+    username = request.form["username"]
+    password = request.form["password"]
+
     session[username] = username
 
     if username == "admin" and password == "1234":
+        flash("You are logged in as admin")
         return render_template("homepage.html")
     else:
         flash("Invalid username or password")
@@ -124,5 +126,6 @@ if __name__ == "__main__":
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
 
     app.run(host='0.0.0.0')
