@@ -30,6 +30,20 @@ class SavedGeometry(db.Model):
 
         return "<Geo ID=%s Shape=%s>" % (self.geo_id, self.shape)
 
+
+class User(db.Model):
+    """SFMTA Board Resolutions -- Users"""
+
+    __tablename__ = "users"
+
+    user_id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+
+        return "<Username=%s ID=%s>" % (self.username, self.user_id)
+
 ##############################################################################
 # Sample data
 
@@ -51,7 +65,7 @@ def connect_to_db(app, db_uri=None):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgresql:///geodata'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgresql:///resolutions'
     app.config['SQLALCHEMY_ECHO'] = False
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app

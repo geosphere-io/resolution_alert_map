@@ -43,10 +43,10 @@ Gather necessary secret keys from Mapbox and Flask. Save to your secrets file. L
 Database
 
 ```sh
-$ createdb geodata
+$ createdb resolutions
 ```
 ```sh
-$ psql geodata
+$ psql resolutions
 ```
 ```sh
 $ >>> CREATE EXTENSION postgis;
