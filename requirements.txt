@@ -7,7 +7,7 @@ GeoAlchemy==0.7.2
 GeoAlchemy2==0.4.0
 geojson==2.1.0
 itsdangerous==0.24
-Jinja2==2.7.3
+Jinja2==2.10.1
 MarkupSafe==0.23
 pkg-resources==0.0.0
 postgis==1.0.4
